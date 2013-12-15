@@ -1,7 +1,7 @@
 redis_multinode
 ===============
 
-This module is intended to deploy a group of systems running Redis instances, with replication and failover managed by Redis Sentinel.
+This module is intended to deploy a group of systems running [Redis](http://redis.io) instances, with replication and failover managed by Redis Sentinel.
 
 Since most Redis client stacks don't have any mechanism for finding the master in a group like this, this module also configures HAProxy, with a listening port on each node which will proxy to the writable node.  (Tracking the master is done by a Python script running on a cron every minute)
 
