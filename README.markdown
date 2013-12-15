@@ -103,7 +103,11 @@ This module also works with standard node definitions.
       }
     }
 
+Note that since we have 3 nodes participating, the `quorum` is set to 2.  To avoid a split-brain scenario, the `quorum` setting must always be configured to a majority of your cluster nodes - so in a 10 node group, `quorum` should be 6.
+
 ## Important Notes ##
+
+Make sure not to overlap listening ports - keep in mind that each instance gets two listening ports - one for Redis, and one for HAProxy pointing to the master node.
 
 The listening ports configuration, as well as the password, should be the same for each node participating in a group for a given instance.. so in the examples above, if the `test` instance were only configured on one node of the three, you'd still want the ports and password for all nodes with `my_app` configured to match.
 
