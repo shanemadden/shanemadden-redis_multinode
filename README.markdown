@@ -107,10 +107,10 @@ Note that since we have 3 nodes participating, the `quorum` is set to 2.  To avo
 
 ## Important Notes ##
 
-Make sure not to overlap listening ports - keep in mind that each instance gets two listening ports - one for Redis, and one for HAProxy pointing to the master node.
+ - Make sure not to overlap listening ports - keep in mind that each instance gets two listening ports - one for Redis, and one for HAProxy pointing to the master node.
 
-The listening ports configuration, as well as the password, should be the same for each node participating in a group for a given instance.. so in the examples above, if the `test` instance were only configured on one node of the three, you'd still want the ports and password for all nodes with `my_app` configured to match.
+ - The listening ports configuration, as well as the password, should be the same for each node participating in a group for a given instance.. so in the examples above, if the `test` instance were only configured on one node of the three, you'd still want the ports and password for all nodes with `my_app` configured to match.
 
-Since the master/slave relationship is handled by Sentinel, Puppet can't have complete control over the config files.  Because of this, changing the configuration of an instance (the resource title, the listening ports, or the password) is likely to break things - the Redis instance will be reconfigured but the Sentinel instances will end up either configured incorrectly or with duplicate configuration.
+ - Since the master/slave relationship is handled by Sentinel, Puppet can't have complete control over the config files.  Because of this, changing the configuration of an instance (the resource title, the listening ports, or the password) is likely to break things - the Redis instance will be reconfigured but the Sentinel instances will end up either configured incorrectly or with duplicate configuration.
 
-Tested on RHEL/CentOS 6 (requires EPEL to be enabled) and Ubuntu 13.10.
+ - Tested on RHEL/CentOS 6 (requires EPEL to be enabled) and Ubuntu 13.10 - should work most reasonably recent Debian and EL derivatives.  Probably won't work under Puppet versions older than 3.0 without some modifications due to the use of the built-in Hiera functions.
