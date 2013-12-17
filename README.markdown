@@ -9,7 +9,7 @@ So, for each instance, there will be one listening port which is the Redis liste
 
 ## Usage ##
 
-A note on the instance configuration - you'll be setting a mode for each system; master, or slave of a different system.  Note that this is just for the *initial setup* - if/when Sentinel fails your instance over to another node due to the master failing, the module makes no attempt to try to enfore which node holds master.
+A note on the instance configuration: you'll be setting a `mode` for each system; master, or slave (which should then have a `master_ip` of the node configured as master).  Note that this is just for the *initial setup* - if/when Sentinel fails your instance over to another node due to the master failing, the module makes no attempt to try to enfore which node holds master.
 
 ### Hiera ###
 
