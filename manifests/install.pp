@@ -66,7 +66,7 @@ class redis_multinode::install {
   
   # Run the master check every minute..
   cron { "redis-check-masters":
-    command  => "/var/redis/check-masters.py",
+    command  => "/var/redis/check-masters.py > /dev/null 2>&1",
     user     => root,
     minute   => "*",
     require  => [ File["/var/redis/check-masters.py"], Class["redis_multinode::haproxy"], ],
