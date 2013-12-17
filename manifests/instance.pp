@@ -135,7 +135,7 @@ define redis_multinode::instance (
   
   # It'd be nice if augeas supported fiddling with the directives in here, but it chokes on multi-value.
   # For now, hack it with sed.
-  exec { "change quorum size":
+  exec { "change quorum size ${listen_reader}":
     command   => "/bin/sed -i.bak -r 's/(monitor \S+ \S+ ${listen_reader}) [0-9]+/\1 ${quorum}/' /etc/redis/sentinel.conf",
     unless    => "/bin/grep -P \"monitor \S+ \S+ ${listen_reader} ${quorum}\" /etc/redis/sentinel.conf",
     notify    => Service["redis_sentinel"],
