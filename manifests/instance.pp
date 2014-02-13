@@ -14,6 +14,7 @@ define redis_multinode::instance (
   # So if there are three nodes running sentinels, it should be set to 2.
   # If there are six, it should be 4.  If 20, then 11.
   $quorum           = hiera("redis_multinode::${title}::quorum", 2),
+  $down_after_ms    = hiera("redis_multinode::${title}::down_after_ms", 15000),
 )
 {
   case $osfamily {
@@ -124,21 +125,30 @@ define redis_multinode::instance (
     subscribe => Exec["compile and install redis"],
   }
 
+  # We'll set the master node to a higher config epoch initially so that if there's a conflict in config it'll reconfig others
+  $initial_epoch = $role ? {
+    master  => '1',
+    slave   => '0',
+  }
+
   # The sentinel config file has other instances in it, and can change at any time due to failover or node join.
   # We'll just check and see if this instance is configured and add it if not - we can't manage the whole file.
   exec { "insert sentinel config ${listen_reader}":
-    command   => "/bin/echo -e \"sentinel monitor ${instance_name} ${master_ip} ${listen_reader} ${quorum}\\nsentinel down-after-milliseconds ${instance_name} 15000\\nsentinel auth-pass ${instance_name} ${password}\" >> /etc/redis/sentinel.conf",
+    command   => "/bin/echo -e \"sentinel monitor ${instance_name} ${master_ip} ${listen_reader} ${quorum}\\nsentinel down-after-milliseconds ${instance_name} ${down_after_ms}\\nsentinel auth-pass ${instance_name} ${password}\\nsentinel config-epoch ${instance_name} ${initial_epoch}\" >> /etc/redis/sentinel.conf",
     unless    => "/bin/grep -F \"${instance_name}\" /etc/redis/sentinel.conf",
     notify    => Service["redis_sentinel"],
     require   => [ Service["redis_${listen_reader}"], Exec["create sentinel.conf"], ],
   }
   
-  # It'd be nice if augeas supported fiddling with the directives in here, but it chokes on multi-value.
-  # For now, hack it with sed.
   exec { "change quorum size ${listen_reader}":
-    command   => "/bin/sed -i.bak -r 's/(monitor \S+ \S+ ${listen_reader}) [0-9]+/\1 ${quorum}/' /etc/redis/sentinel.conf",
-    unless    => "/bin/grep -P \"monitor \S+ \S+ ${listen_reader} ${quorum}\" /etc/redis/sentinel.conf",
-    notify    => Service["redis_sentinel"],
-    require   => Exec["insert sentinel config ${listen_reader}"],
+    command   => "/usr/local/bin/redis-cli -p 26379 sentinel set ${instance_name} quorum ${quorum}",
+    unless    => "/usr/local/bin/redis-cli -p 26379 sentinel master ${instance_name} | /bin/grep -A 1 quorum | /bin/grep ${quorum}",
+    require   => Service["redis_sentinel"],
+  }
+
+  exec { "change failover timer ${listen_reader}":
+    command   => "/usr/local/bin/redis-cli -p 26379 sentinel set ${instance_name} down-after-milliseconds ${down_after_ms}",
+    unless    => "/usr/local/bin/redis-cli -p 26379 sentinel master ${instance_name} | /bin/grep -A 1 down-after-milliseconds | /bin/grep ${down_after_ms}",
+    require   => Service["redis_sentinel"],
   }
 }
