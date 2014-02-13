@@ -36,7 +36,6 @@ listen redis-%s
     if not targetconfig == config:
         # the config changed, let's rewrite it
         # we'll also set the boolean flag that tells the script to reload haproxy at the end
-        print("Detected change for instance %s, rewriting config..." % masterport)
         changes = True
         configfile = open('/etc/haproxy/cfg.d/%s.cfg' % masterport, 'w')
 
@@ -45,4 +44,4 @@ listen redis-%s
 
 if changes:
     os.system('/bin/cat /etc/haproxy/cfg.d/*.cfg > /etc/haproxy/haproxy.cfg')
-    os.system('/etc/init.d/haproxy reload')
+    os.system('/etc/init.d/haproxy reload > /dev/null 2>&1')
