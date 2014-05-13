@@ -1,5 +1,5 @@
 name    'shanemadden-redis_multinode'
-version '0.5.0'
+version '1.0.0'
 source 'git://github.com/shanemadden/shanemadden-redis_multinode.git'
 author 'shanemadden'
 license 'Apache License, Version 2.0'
