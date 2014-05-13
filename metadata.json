@@ -1,0 +1,72 @@
+{
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "6"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "6"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "14.04"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": "3.x"
+    }
+  ],
+  "name": "shanemadden-redis_multinode",
+  "version": "0.5.0",
+  "source": "git://github.com/shanemadden/shanemadden-redis_multinode.git",
+  "author": "shanemadden",
+  "license": "Apache License, Version 2.0",
+  "summary": "Puppet module for building a multi-node Redis failover group with Sentinel",
+  "description": "Puppet module for building a multi-node Redis failover group with Sentinel",
+  "project_page": "https://github.com/shanemadden/shanemadden-redis_multinode",
+  "dependencies": [
+    {
+      "name": "puppetlabs/vcsrepo",
+      "version_requirement": ">= 0.2.0"
+    }
+  ],
+  "types": [
+
+  ],
+  "checksums": {
+    "LICENSE": "d2794c0df5b907fdace235a619d80314",
+    "Modulefile": "5d3e9fd1794a0fe583ec60bd8f0d9940",
+    "README.markdown": "80e9a2b92addbed7d649dad0f58ff463",
+    "files/check-masters.py": "41ab862a265cc0e1c78ae57bfef1772e",
+    "files/haproxy-global.cfg": "86939a10f01e662445365647094b822c",
+    "files/haproxy_init-Debian": "95df3d4eb4b3586b2bf7f0036caa9495",
+    "files/haproxy_init-RedHat": "d47a2ae11c2011c2e47ff7f840c9fbd5",
+    "files/redis.logrotate": "e3897f4bcc7a73a2de583cd3f842afe1",
+    "files/sentinel_init.sh": "5002abeb722b2940f224c7885ba6e6eb",
+    "manifests/haproxy.pp": "e7074c5f317bcfddac7f0e33bd6c0502",
+    "manifests/init.pp": "dc9ac14b1d645efe126ba6bb943c5672",
+    "manifests/install.pp": "87059dbfdfae9941e63c5df2cc210759",
+    "manifests/instance.pp": "2d7c057c47fe3d7c177f3c662e5802f1",
+    "manifests/prereqs.pp": "83d8483919a7e4826fdd62e02bed74ca",
+    "manifests/sentinel.pp": "6912300331ac6fc9aa63e05a233a4e91",
+    "spec/spec_helper.rb": "a55d1e6483344f8ec6963fcb2c220372",
+    "templates/redis_init.erb": "95b43bb60b3c894f3c0410c0d85a811f",
+    "tests/init.pp": "b744fa86dd3bcbe49d4de803e28fdadb"
+  }
+}
