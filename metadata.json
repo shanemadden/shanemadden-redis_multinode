@@ -40,6 +40,7 @@
   "summary": "Puppet module for building a multi-node Redis failover group with Sentinel",
   "description": "Puppet module for building a multi-node Redis failover group with Sentinel",
   "project_page": "https://github.com/shanemadden/shanemadden-redis_multinode",
+  "issues_url": "https://github.com/shanemadden/shanemadden-redis_multinode/issues",
   "dependencies": [
     {
       "name": "puppetlabs/vcsrepo",
