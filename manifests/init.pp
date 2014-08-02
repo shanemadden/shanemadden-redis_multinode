@@ -1,5 +1,5 @@
 class redis_multinode (
-  $version    = '2.8.9', # 2.8.5 is required for online reconfig of quorum size and timeout
+  $version    = '2.8.13', # 2.8.5 is required for online reconfig of quorum size and timeout
   $use_github = false, # if this is true, $version should be a branch name on the git repo https://github.com/antirez/redis
 )
 {
