@@ -69,6 +69,6 @@ class redis_multinode::install {
     command  => "/var/redis/check-masters.py > /dev/null 2>&1",
     user     => root,
     minute   => "*",
-    require  => [ File["/var/redis/check-masters.py"], Class["redis_multinode::haproxy"], ],
+    require  => [ File["/var/redis/check-masters.py"], Class["redis_multinode::prereqs"], ],
   }
 }
