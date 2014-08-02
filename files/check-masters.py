@@ -4,7 +4,7 @@ import os
 
 r = redis.StrictRedis(host='localhost', port=26379, db=0)
 changes = False
-for instancedata in r.sentinel('masters'):
+for instancename, instancedata in r.sentinel_masters().items():
     # capture master ip and port from redis query:
     masterip = instancedata['ip']
     masterport = instancedata['port']
